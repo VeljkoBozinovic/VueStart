@@ -73,7 +73,7 @@ const app = Vue.createApp({
     specialAttackCooldown() {
       if (this.canUseSpecialAttack) return;
       this.round++;
-      if (!(this.round === 2)) return;
+      if (this.round !== 2) return;
       this.round = 0;
       this.canUseSpecialAttack = true;
     },
