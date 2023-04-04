@@ -7,6 +7,7 @@ const app = Vue.createApp({
     return {
       playerHealth: 100,
       monsterHealth: 100,
+      canUseSpecialAttack: true,
       round: 0,
       winner: null,
     };
@@ -26,17 +27,24 @@ const app = Vue.createApp({
   watch: {
     playerHealth(value) {
       if (value <= 0 && this.monsterHealth <= 0) this.winner = "Draw";
-      else if (value <= 0) this.winner = "Monster";
+      else if (value <= 0) this.winner = "Monster is a winner!";
     },
     monsterHealth(value) {
       if (value <= 0 && this.playerHealth <= 0) this.winner = "Draw";
-      else if (value <= 0) this.winner = "Player";
+      else if (value <= 0) this.winner = "Player is a winner!";
     },
   },
 
   methods: {
+    newGame() {
+      this.playerHealth = 100;
+      this.monsterHealth = 100;
+      this.canUseSpecialAttack = true;
+      this.round = 0;
+      this.winner = null;
+    },
     playerAttack() {
-      this.round++;
+      this.specialAttackCooldown();
       const damageDealt = getRandomValue(5, 12);
       this.monsterHealth -= damageDealt;
       this.monsterAttack();
@@ -46,23 +54,28 @@ const app = Vue.createApp({
       this.playerHealth -= damageDealt;
     },
     playerSpecialAttack() {
-      this.round++;
+      this.canUseSpecialAttack = false;
       const damageDealt = getRandomValue(8, 20);
       this.monsterHealth -= damageDealt;
       this.monsterAttack();
     },
     playerHeal() {
-      this.round++;
+      this.specialAttackCooldown();
       const healReceived = getRandomValue(15, 25);
-      if (this.playerHealth + healReceived <= 100) this.playerHealth += healReceived;
-      else this.playerHealth = 100;
+      this.playerHealth + healReceived <= 100
+        ? (this.playerHealth += healReceived)
+        : (this.playerHealth = 100);
       this.monsterAttack();
     },
-    newGame() {
-      this.playerHealth = 100;
-      this.monsterHealth = 100;
+    ffVote() {
+      this.winner = "Monster is a winner!";
+    },
+    specialAttackCooldown() {
+      if (this.canUseSpecialAttack) return;
+      this.round++;
+      if (!(this.round === 2)) return;
       this.round = 0;
-      this.winner = null;
+      this.canUseSpecialAttack = true;
     },
   },
 });

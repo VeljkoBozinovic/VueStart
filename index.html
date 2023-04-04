@@ -30,14 +30,16 @@
       </section>
       <section v-if="winner">
         <h2>GAME OVER</h2>
-        <h2>Winner is: {{ winner }}</h2>
+        <h2>{{ winner }}</h2>
         <button @click="newGame">New Game</button>
       </section>
       <section v-else>
         <button @click="playerAttack">Attack</button>
-        <button @click="playerSpecialAttack" :disabled="round % 3 !==0">Special Attack</button>
+        <button @click="playerSpecialAttack" :disabled="!canUseSpecialAttack">
+          Special Attack
+        </button>
         <button @click="playerHeal">Heal</button>
-        <button>FF</button>
+        <button @click="ffVote">FF</button>
       </section>
     </div>
   </body>

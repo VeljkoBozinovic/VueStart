@@ -2,11 +2,11 @@
   box-sizing: border-box;
   margin: 0;
   padding: 0;
+  text-align: center;
 }
 
 header {
   padding: 20px;
-  text-align: center;
   font-size: 30px;
   background-color: darkred;
   color: white;
@@ -21,7 +21,6 @@ header {
 #myApp .info {
   padding: 20px;
   box-shadow: 0 0 2px black;
-  text-align: center;
   margin: 20px 0;
 }
 #myApp .info-healthbar {
@@ -36,7 +35,7 @@ header {
 }
 #myApp button {
   display: block;
-  margin: 15px 0;
+  margin: 15px auto;
   width: 150px;
   height: 50px;
   font-size: 17px;
